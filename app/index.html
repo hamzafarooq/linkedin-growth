@@ -14,6 +14,7 @@
       --accent2: #7c5cfc;
       --green: #22c55e;
       --yellow: #f59e0b;
+      --red: #ef4444;
       --text: #e8eaf6;
       --muted: #8892b0;
       --radius: 12px;
@@ -31,7 +32,6 @@
 
     .container { max-width: 860px; margin: 0 auto; }
 
-    /* Header */
     header { text-align: center; margin-bottom: 48px; }
     header h1 {
       font-size: 2.2rem;
@@ -44,7 +44,6 @@
     }
     header p { color: var(--muted); font-size: 1rem; }
 
-    /* Status bar */
     .status-bar {
       display: flex;
       gap: 12px;
@@ -70,8 +69,10 @@
     }
     .dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
     .dot.yellow { background: var(--yellow); }
+    .dot.red { background: var(--red); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .dot.pulsing { background: var(--accent); animation: pulse 1.2s infinite; }
 
-    /* Cards */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -99,7 +100,6 @@
       flex-shrink: 0;
     }
 
-    /* Inputs */
     .input-group { margin-bottom: 14px; }
     label {
       display: block;
@@ -122,7 +122,6 @@
     input[type="text"]:focus { border-color: var(--accent); }
     input[type="text"]::placeholder { color: var(--border); }
 
-    /* Profiles list */
     .profiles-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
     .profile-row {
       display: flex;
@@ -145,7 +144,7 @@
       transition: all 0.2s;
       white-space: nowrap;
     }
-    .remove-btn:hover { border-color: #ef4444; color: #ef4444; }
+    .remove-btn:hover { border-color: var(--red); color: var(--red); }
 
     .add-btn {
       background: none;
@@ -160,21 +159,16 @@
     }
     .add-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Divider */
     .col-labels {
       display: flex;
       gap: 8px;
       margin-bottom: 6px;
     }
-    .col-labels span {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .col-labels span { font-size: 0.75rem; color: var(--muted); }
     .col-labels span:first-child { flex: 1; }
     .col-labels span:nth-child(2) { width: 140px; flex-shrink: 0; }
     .col-labels span:last-child { width: 56px; flex-shrink: 0; }
 
-    /* Pipeline */
     .pipeline {
       display: flex;
       flex-direction: column;
@@ -208,17 +202,21 @@
       border-color: transparent;
       color: white;
     }
+    .pipeline-circle.done {
+      background: var(--green);
+      border-color: transparent;
+      color: white;
+    }
     .pipeline-connector {
       width: 2px;
       height: 32px;
       background: var(--border);
       margin: 3px 0;
     }
-    .pipeline-content { padding-top: 4px; padding-bottom: 24px; flex: 1; }
+    .pipeline-content { padding-top: 4px; padding-bottom: 24px; flex: 1; min-width: 0; }
     .pipeline-content h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
     .pipeline-content p { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
 
-    /* Command box */
     .cmd-box {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -229,11 +227,9 @@
       color: #a8dadc;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       cursor: pointer;
       transition: border-color 0.2s;
-      position: relative;
     }
     .cmd-box:hover { border-color: var(--accent); }
     .cmd-text { flex: 1; word-break: break-all; }
@@ -252,14 +248,96 @@
     .copy-btn:hover { color: var(--accent); }
     .copy-btn.copied { color: var(--green); }
 
+    .run-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+    .run-btn:hover { opacity: 0.85; }
+    .run-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
     .cmd-empty {
       color: var(--border);
       font-style: italic;
     }
 
-    /* Generate button */
+    /* Output terminal */
+    .output-area {
+      margin-top: 10px;
+      background: #0a0c12;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: none;
+    }
+    .output-area.visible { display: block; }
+    .output-header {
+      padding: 6px 12px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .output-header .status-label { flex: 1; }
+    .output-header .clear-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    .output-header .clear-btn:hover { color: var(--text); }
+    .output-body {
+      padding: 12px 14px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      max-height: 420px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+    .out-cmd { color: var(--accent); font-weight: bold; margin-bottom: 6px; display: block; }
+    .out-text { color: #c8d8e8; }
+    .out-tool { color: var(--muted); font-style: italic; }
+    .out-log { color: #5a6080; }
+    .out-done { color: var(--green); font-weight: bold; margin-top: 6px; display: block; }
+    .out-error { color: var(--red); }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
     .generate-btn {
-      width: 100%;
+      flex: 1;
+      padding: 13px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .generate-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    .run-all-btn {
+      flex: 1;
       padding: 13px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border: none;
@@ -269,11 +347,10 @@
       font-weight: 600;
       cursor: pointer;
       transition: opacity 0.2s;
-      margin-top: 4px;
     }
-    .generate-btn:hover { opacity: 0.9; }
+    .run-all-btn:hover { opacity: 0.9; }
+    .run-all-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* Setup section */
     .setup-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .setup-header {
       padding: 16px 20px;
@@ -308,7 +385,6 @@
       word-break: break-all;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       padding-top: 32px;
@@ -318,7 +394,66 @@
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
-    /* Toast */
+    /* Chrome MCP banner */
+    .mcp-banner {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .mcp-banner .mcp-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .mcp-banner h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .mcp-banner p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .mcp-banner code {
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: #a8dadc;
+    }
+    .mcp-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mcp-step {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 0.82rem;
+    }
+    .mcp-step .n {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mcp-step span { color: var(--muted); flex: 1; line-height: 1.4; }
+    .mcp-step code { font-size: 0.75rem; }
+
     .toast {
       position: fixed;
       bottom: 24px;
@@ -340,6 +475,7 @@
       header h1 { font-size: 1.6rem; }
       .col-labels, .profile-row { flex-wrap: wrap; }
       .profile-row .label-input { width: 100%; }
+      .action-row { flex-direction: column; }
     }
   </style>
 </head>
@@ -351,21 +487,48 @@
     <p>Research creators you admire · audit your profile · build your content strategy</p>
   </header>
 
+  <!-- Chrome MCP callout -->
+  <div class="mcp-banner">
+    <div class="mcp-icon">🔌</div>
+    <div>
+      <h3>Chrome MCP required — one-time setup</h3>
+      <p>The skills control a real Chrome browser to read LinkedIn. You need Chrome running with remote debugging <strong>and</strong> the Puppeteer MCP server wired into Claude Code. Do this once and you're set.</p>
+      <div class="mcp-steps">
+        <div class="mcp-step">
+          <div class="n">1</div>
+          <span>Launch Chrome with <code>--remote-debugging-port=9222</code> — see the Setup Guide below for the exact command.</span>
+        </div>
+        <div class="mcp-step">
+          <div class="n">2</div>
+          <span>Add the Puppeteer MCP server to <code>~/.claude/settings.json</code> so Claude Code can drive that browser — full snippet in the Setup Guide.</span>
+        </div>
+        <div class="mcp-step">
+          <div class="n">3</div>
+          <span>Log into LinkedIn in that Chrome window. The skills need an active session to read profile data.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Status bar -->
   <div class="status-bar">
     <span>Status:</span>
     <div class="status-item">
+      <div class="dot yellow" id="server-dot"></div>
+      <span id="server-status">Server — checking...</span>
+    </div>
+    <div class="status-item">
       <div class="dot yellow" id="chrome-dot"></div>
-      <span id="chrome-status">Chrome MCP — not verified</span>
+      <span id="chrome-status">Chrome — not verified</span>
     </div>
     <div class="status-item" style="margin-left: auto;">
       <div class="dot" id="li-dot"></div>
-      <span id="li-status">LinkedIn login — unknown</span>
+      <span id="li-status">LinkedIn — unknown</span>
     </div>
-    <button onclick="checkChrome()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;">Check</button>
+    <button onclick="checkAll()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;">Check</button>
   </div>
 
-  <!-- Step 1: Your profile -->
+  <!-- Step 1 -->
   <div class="card">
     <h2><span class="step-num">1</span> Your LinkedIn profile</h2>
     <div class="input-group">
@@ -374,7 +537,7 @@
     </div>
   </div>
 
-  <!-- Step 2: Profiles to learn from -->
+  <!-- Step 2 -->
   <div class="card">
     <h2><span class="step-num">2</span> Profiles to learn from</h2>
     <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">Add LinkedIn profiles of creators, colleagues, or people in your space whose content you want to study.</p>
@@ -389,54 +552,78 @@
     <button class="add-btn" onclick="addProfile()">+ Add profile</button>
   </div>
 
-  <!-- Step 3: Generated commands -->
+  <!-- Step 3 -->
   <div class="card">
-    <h2><span class="step-num">3</span> Your Claude Code commands</h2>
-    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;">Run these in order inside your Claude Code session (<code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:0.8rem;">claude</code> in this repo's directory).</p>
+    <h2><span class="step-num">3</span> Run your pipeline</h2>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;">Click <strong>▶ Run</strong> next to each step, or <strong>▶ Run All</strong> to execute the full pipeline automatically.</p>
 
     <div class="pipeline" id="pipeline">
 
       <div class="pipeline-step">
         <div class="pipeline-line">
-          <div class="pipeline-circle active">1</div>
+          <div class="pipeline-circle active" id="circle-1">1</div>
           <div class="pipeline-connector"></div>
         </div>
         <div class="pipeline-content">
           <h3>Research profiles</h3>
           <p>Extract content strategy from each profile you want to learn from.</p>
           <div id="research-cmds"></div>
+          <div class="output-area" id="out-research">
+            <div class="output-header">
+              <span class="status-label" id="out-research-label">Ready</span>
+              <button class="clear-btn" onclick="clearOutput('out-research')">clear</button>
+            </div>
+            <div class="output-body" id="out-research-body"></div>
+          </div>
         </div>
       </div>
 
       <div class="pipeline-step">
         <div class="pipeline-line">
-          <div class="pipeline-circle active">2</div>
+          <div class="pipeline-circle active" id="circle-2">2</div>
           <div class="pipeline-connector"></div>
         </div>
         <div class="pipeline-content">
           <h3>Audit your profile</h3>
           <p>Analyze your LinkedIn presence and benchmark it against the profiles you researched.</p>
           <div id="audit-cmd"></div>
+          <div class="output-area" id="out-audit">
+            <div class="output-header">
+              <span class="status-label" id="out-audit-label">Ready</span>
+              <button class="clear-btn" onclick="clearOutput('out-audit')">clear</button>
+            </div>
+            <div class="output-body" id="out-audit-body"></div>
+          </div>
         </div>
       </div>
 
       <div class="pipeline-step">
         <div class="pipeline-line">
-          <div class="pipeline-circle active">3</div>
+          <div class="pipeline-circle active" id="circle-3">3</div>
         </div>
         <div class="pipeline-content">
           <h3>Build your content strategy</h3>
           <p>Generate a 30-day calendar with a detailed brief for every post.</p>
           <div id="planner-cmd"></div>
+          <div class="output-area" id="out-planner">
+            <div class="output-header">
+              <span class="status-label" id="out-planner-label">Ready</span>
+              <button class="clear-btn" onclick="clearOutput('out-planner')">clear</button>
+            </div>
+            <div class="output-body" id="out-planner-body"></div>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <button class="generate-btn" onclick="copyAll()">Copy all commands</button>
+    <div class="action-row">
+      <button class="generate-btn" onclick="copyAll()">Copy all commands</button>
+      <button class="run-all-btn" id="run-all-btn" onclick="runAll()">▶ Run All</button>
+    </div>
   </div>
 
-  <!-- Setup guide (collapsible) -->
+  <!-- Setup guide -->
   <div class="setup-card" style="margin-bottom:20px;">
     <div class="setup-header" onclick="toggleSetup()">
       <h2>Setup guide</h2>
@@ -446,14 +633,22 @@
 
       <div class="setup-step">
         <h3>1. Install Claude Code</h3>
-        <p>Requires Node.js 18+ and an Anthropic API key.</p>
+        <p>Requires Node.js 18+ and an Anthropic account.</p>
         <pre>npm install -g @anthropic-ai/claude-code</pre>
       </div>
 
       <div class="setup-step">
-        <h3>2. Launch Chrome with remote debugging</h3>
-        <p>Regular Chrome won't work — it must be launched with this flag. Run this once before starting any skill.</p>
-        <pre id="chrome-cmd-mac">/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+        <h3>2. Start the local server</h3>
+        <p>Run once from the repo directory — this powers the Run buttons.</p>
+        <pre>npm install
+npm start</pre>
+        <p style="margin-top:8px;">Then open <strong>http://localhost:3000</strong> in your browser.</p>
+      </div>
+
+      <div class="setup-step">
+        <h3>3. Launch Chrome with remote debugging</h3>
+        <p>Regular Chrome won't work — it must be launched with this flag.</p>
+        <pre>/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
   --user-data-dir=/tmp/chrome-debug</pre>
         <p style="margin-top:8px;">Verify it's running:</p>
@@ -461,7 +656,7 @@
       </div>
 
       <div class="setup-step">
-        <h3>3. Add Chrome MCP to Claude Code settings</h3>
+        <h3>4. Add Chrome MCP to Claude Code</h3>
         <p>Add this to <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:0.78rem;">~/.claude/settings.json</code>:</p>
         <pre>{
   "mcpServers": {
@@ -477,52 +672,42 @@
       </div>
 
       <div class="setup-step">
-        <h3>4. Log into LinkedIn</h3>
-        <p>In the Chrome window you just opened, go to <strong>linkedin.com</strong> and sign in. The skills need an active session to access profile data.</p>
-      </div>
-
-      <div class="setup-step">
-        <h3>5. Open this repo in Claude Code</h3>
-        <pre>cd linkedin-growth-kit
-claude</pre>
-        <p style="margin-top:8px;">Then run the commands from Step 3 above.</p>
+        <h3>5. Log into LinkedIn</h3>
+        <p>In the Chrome window you just opened, go to <strong>linkedin.com</strong> and sign in.</p>
       </div>
 
     </div>
   </div>
 
   <footer>
-    <p>LinkedIn Growth Kit · <a href="https://github.com/your-username/linkedin-growth-kit" target="_blank">GitHub</a> · Powered by <a href="https://claude.ai/code" target="_blank">Claude Code</a></p>
+    <p>LinkedIn Growth Kit · <a href="https://github.com/hamzafarooq/linkedin-growth" target="_blank">GitHub</a> · Powered by <a href="https://claude.ai/code" target="_blank">Claude Code</a></p>
   </footer>
 
 </div>
 
-<div class="toast" id="toast">Copied to clipboard</div>
+<div class="toast" id="toast"></div>
 
 <script>
-  // State
   let profiles = [];
+  let serverOnline = false;
+  let running = false;
 
+  // ── Persistence ──────────────────────────────────────────────
   function save() {
-    const yourUrl = document.getElementById('your-url').value;
-    localStorage.setItem('lgk_your_url', yourUrl);
+    localStorage.setItem('lgk_your_url', document.getElementById('your-url').value);
     localStorage.setItem('lgk_profiles', JSON.stringify(profiles));
   }
 
   function load() {
-    const yourUrl = localStorage.getItem('lgk_your_url') || '';
-    document.getElementById('your-url').value = yourUrl;
-
-    const saved = localStorage.getItem('lgk_profiles');
-    if (saved) {
-      try { profiles = JSON.parse(saved); } catch(e) { profiles = []; }
-    }
+    document.getElementById('your-url').value = localStorage.getItem('lgk_your_url') || '';
+    try { profiles = JSON.parse(localStorage.getItem('lgk_profiles')) || []; } catch(e) { profiles = []; }
     if (profiles.length === 0) profiles = [{ url: '', label: '' }];
     renderProfiles();
     updateCommands();
+    checkAll();
   }
 
-  // Profiles
+  // ── Profiles ──────────────────────────────────────────────────
   function renderProfiles() {
     const list = document.getElementById('profiles-list');
     list.innerHTML = '';
@@ -559,115 +744,303 @@ claude</pre>
     return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // Commands
+  // ── Slug helpers ──────────────────────────────────────────────
   function slugFromUrl(url) {
     if (!url) return null;
     const m = url.match(/linkedin\.com\/in\/([^/?]+)/i) || url.match(/linkedin\.com\/company\/([^/?]+)/i);
     return m ? m[1].replace(/\/$/, '') : null;
   }
 
+  // ── Commands ──────────────────────────────────────────────────
+  let researchCmds = [];
+  let auditCmd = '';
+  let plannerCmd = '';
+
   function updateCommands() {
     const yourUrl = document.getElementById('your-url').value.trim();
     const yourSlug = slugFromUrl(yourUrl);
     const validProfiles = profiles.filter(p => p.url.trim());
 
-    // Research commands
+    researchCmds = validProfiles.map(p => `/linkedin_profile_research ${p.url.trim()}`);
+
+    const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
+    const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
+
+    auditCmd = yourUrl ? `/analyze_your_linkedin_profile ${yourUrl}${vsStr}` : '';
+    plannerCmd = yourSlug ? `/linkedin_content_planner ${yourSlug}${vsStr}` : '';
+
+    // Render research
     const researchDiv = document.getElementById('research-cmds');
     if (validProfiles.length === 0) {
-      researchDiv.innerHTML = cmdBox('', true);
+      researchDiv.innerHTML = emptyBox();
     } else {
-      researchDiv.innerHTML = validProfiles.map(p => {
-        const label = p.label ? ` <span style="color:var(--muted);font-style:italic;">← ${escapeHtml(p.label)}</span>` : '';
-        return cmdBox(`/linkedin_profile_research ${p.url.trim()}`) + (p.label ? `<div style="font-size:0.75rem;color:var(--muted);margin-top:3px;margin-bottom:8px;padding-left:4px;">${escapeHtml(p.label)}</div>` : '<div style="margin-bottom:8px;"></div>');
+      researchDiv.innerHTML = validProfiles.map((p, i) => {
+        const cmd = researchCmds[i];
+        return cmdBox(cmd, 'out-research', `Run${validProfiles.length > 1 ? ' #'+(i+1) : ''}`) +
+          (p.label ? `<div style="font-size:0.75rem;color:var(--muted);margin-top:3px;margin-bottom:8px;padding-left:4px;">${escapeHtml(p.label)}</div>` : '<div style="margin-bottom:8px;"></div>');
       }).join('');
     }
 
-    // Audit command
-    const auditDiv = document.getElementById('audit-cmd');
-    if (!yourUrl) {
-      auditDiv.innerHTML = cmdBox('', true);
-    } else {
-      const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
-      const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
-      auditDiv.innerHTML = cmdBox(`/analyze_your_linkedin_profile ${yourUrl}${vsStr}`);
-    }
-
-    // Planner command
-    const plannerDiv = document.getElementById('planner-cmd');
-    if (!yourSlug) {
-      plannerDiv.innerHTML = cmdBox('', true);
-    } else {
-      const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
-      const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
-      plannerDiv.innerHTML = cmdBox(`/linkedin_content_planner ${yourSlug}${vsStr}`);
-    }
+    document.getElementById('audit-cmd').innerHTML = auditCmd ? cmdBox(auditCmd, 'out-audit', 'Run') : emptyBox();
+    document.getElementById('planner-cmd').innerHTML = plannerCmd ? cmdBox(plannerCmd, 'out-planner', 'Run') : emptyBox();
   }
 
-  function cmdBox(cmd, empty) {
-    if (empty || !cmd) {
-      return `<div class="cmd-box"><span class="cmd-empty cmd-text">— fill in your URLs above —</span></div>`;
-    }
-    return `<div class="cmd-box" onclick="copyCmd(this, '${cmd.replace(/'/g, "\\'")}')">
+  function emptyBox() {
+    return `<div class="cmd-box"><span class="cmd-empty cmd-text">— fill in your URLs above —</span></div>`;
+  }
+
+  function cmdBox(cmd, outputId, runLabel) {
+    const safeCmd = cmd.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    return `<div class="cmd-box" onclick="copyCmd(this, '${safeCmd}')">
       <span class="cmd-text">${escapeHtml(cmd)}</span>
-      <button class="copy-btn">copy</button>
+      <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this.closest('.cmd-box'), '${safeCmd}')">copy</button>
+      <button class="run-btn" onclick="event.stopPropagation(); runCommand('${safeCmd}', '${outputId}')" ${running ? 'disabled' : ''}>${runLabel || '▶ Run'}</button>
     </div>`;
   }
 
+  // ── Copy ──────────────────────────────────────────────────────
   function copyCmd(el, cmd) {
     navigator.clipboard.writeText(cmd).then(() => {
       const btn = el.querySelector('.copy-btn');
-      btn.textContent = 'copied!';
-      btn.classList.add('copied');
+      if (btn) { btn.textContent = 'copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500); }
       showToast('Copied!');
-      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500);
     });
   }
 
   function copyAll() {
-    const yourUrl = document.getElementById('your-url').value.trim();
-    const yourSlug = slugFromUrl(yourUrl);
-    const validProfiles = profiles.filter(p => p.url.trim());
-    const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
-    const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
-
-    const lines = [];
-    validProfiles.forEach(p => lines.push(`/linkedin_profile_research ${p.url.trim()}`));
-    if (yourUrl) lines.push(`/analyze_your_linkedin_profile ${yourUrl}${vsStr}`);
-    if (yourSlug) lines.push(`/linkedin_content_planner ${yourSlug}${vsStr}`);
-
+    const lines = [...researchCmds];
+    if (auditCmd) lines.push(auditCmd);
+    if (plannerCmd) lines.push(plannerCmd);
     if (lines.length === 0) { showToast('Add URLs first'); return; }
     navigator.clipboard.writeText(lines.join('\n')).then(() => showToast('All commands copied!'));
   }
 
-  // Chrome check
-  async function checkChrome() {
-    const dot = document.getElementById('chrome-dot');
-    const status = document.getElementById('chrome-status');
-    status.textContent = 'Checking...';
-    try {
-      const res = await fetch('http://127.0.0.1:9222/json/version', { mode: 'no-cors' });
-      dot.className = 'dot green';
-      status.textContent = 'Chrome MCP — connected';
-    } catch(e) {
-      dot.className = 'dot yellow';
-      status.textContent = 'Chrome MCP — not found (see setup guide)';
+  // ── Run ───────────────────────────────────────────────────────
+  function runCommand(cmd, outputId) {
+    if (!serverOnline) {
+      showToast('Start the server first: npm start');
+      toggleSetup(true);
+      return;
+    }
+    if (running) { showToast('A command is already running'); return; }
+
+    const area = document.getElementById(outputId);
+    const body = document.getElementById(outputId + '-body');
+    const label = document.getElementById(outputId + '-label');
+
+    area.classList.add('visible');
+    body.innerHTML = `<span class="out-cmd">$ ${escapeHtml(cmd)}</span>`;
+    setRunning(true);
+    label.textContent = 'Running…';
+
+    const es = new EventSource('/api/run?' + new URLSearchParams({ _: Date.now() }));
+
+    // Actually use fetch + ReadableStream for POST
+    es.close();
+
+    fetch('/api/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ command: cmd })
+    }).then(res => {
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) { finish(0); return; }
+          buf += decoder.decode(value, { stream: true });
+          const parts = buf.split('\n\n');
+          buf = parts.pop();
+          for (const part of parts) {
+            if (!part.startsWith('data: ')) continue;
+            try {
+              const ev = JSON.parse(part.slice(6));
+              handleEvent(ev, body, label, outputId);
+            } catch(e) {}
+          }
+          read();
+        }).catch(err => {
+          appendLine(body, `<span class="out-error">Connection error: ${escapeHtml(err.message)}</span>`);
+          finish(1);
+        });
+      }
+      read();
+    }).catch(err => {
+      appendLine(body, `<span class="out-error">Failed to connect to server: ${escapeHtml(err.message)}</span>`);
+      finish(1);
+    });
+
+    function finish(code) {
+      setRunning(false);
+      if (code === 0) {
+        label.textContent = 'Done';
+      } else {
+        label.textContent = 'Error';
+      }
     }
   }
 
-  // Setup toggle
-  function toggleSetup() {
+  function handleEvent(ev, body, label, outputId) {
+    if (ev.type === 'text') {
+      appendLine(body, `<span class="out-text">${escapeHtml(ev.text)}</span>`);
+    } else if (ev.type === 'tool') {
+      appendLine(body, `<span class="out-tool">→ ${escapeHtml(ev.text)}</span>\n`);
+    } else if (ev.type === 'log') {
+      // skip noisy logs
+    } else if (ev.type === 'error') {
+      appendLine(body, `<span class="out-error">Error: ${escapeHtml(ev.text)}</span>`);
+    } else if (ev.type === 'done') {
+      const stepMap = { 'out-research': 'circle-1', 'out-audit': 'circle-2', 'out-planner': 'circle-3' };
+      const circleId = stepMap[outputId];
+      if (circleId && ev.code === 0) {
+        const c = document.getElementById(circleId);
+        c.classList.remove('active');
+        c.classList.add('done');
+        c.textContent = '✓';
+      }
+      appendLine(body, `<span class="out-done">${ev.code === 0 ? '✓ Done' : '✗ Exited with code ' + ev.code}</span>`);
+      label.textContent = ev.code === 0 ? 'Done ✓' : 'Error';
+    }
+  }
+
+  function appendLine(body, html) {
+    body.innerHTML += html;
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function clearOutput(outputId) {
+    document.getElementById(outputId + '-body').innerHTML = '';
+    document.getElementById(outputId + '-label').textContent = 'Ready';
+    document.getElementById(outputId).classList.remove('visible');
+  }
+
+  function setRunning(val) {
+    running = val;
+    document.getElementById('run-all-btn').disabled = val;
+    updateCommands(); // re-render buttons with disabled state
+  }
+
+  // ── Run All ───────────────────────────────────────────────────
+  async function runAll() {
+    if (!serverOnline) { showToast('Start the server first: npm start'); toggleSetup(true); return; }
+
+    const cmds = [];
+    researchCmds.forEach(c => cmds.push({ cmd: c, outputId: 'out-research' }));
+    if (auditCmd) cmds.push({ cmd: auditCmd, outputId: 'out-audit' });
+    if (plannerCmd) cmds.push({ cmd: plannerCmd, outputId: 'out-planner' });
+
+    if (cmds.length === 0) { showToast('Add URLs first'); return; }
+
+    for (const { cmd, outputId } of cmds) {
+      await runCommandAsync(cmd, outputId);
+    }
+    showToast('All steps complete!');
+  }
+
+  function runCommandAsync(cmd, outputId) {
+    return new Promise((resolve) => {
+      if (!serverOnline) { resolve(); return; }
+
+      const area = document.getElementById(outputId);
+      const body = document.getElementById(outputId + '-body');
+      const label = document.getElementById(outputId + '-label');
+
+      area.classList.add('visible');
+      body.innerHTML += `<span class="out-cmd">$ ${escapeHtml(cmd)}</span>`;
+      setRunning(true);
+      label.textContent = 'Running…';
+
+      fetch('/api/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      }).then(res => {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+
+        function read() {
+          reader.read().then(({ done, value }) => {
+            if (done) { finish(0); return; }
+            buf += decoder.decode(value, { stream: true });
+            const parts = buf.split('\n\n');
+            buf = parts.pop();
+            for (const part of parts) {
+              if (!part.startsWith('data: ')) continue;
+              try {
+                const ev = JSON.parse(part.slice(6));
+                handleEvent(ev, body, label, outputId);
+                if (ev.type === 'done') { finish(ev.code); return; }
+              } catch(e) {}
+            }
+            read();
+          }).catch(() => { finish(1); });
+        }
+        read();
+      }).catch(() => { finish(1); });
+
+      function finish(code) {
+        setRunning(false);
+        label.textContent = code === 0 ? 'Done ✓' : 'Error';
+        resolve();
+      }
+    });
+  }
+
+  // ── Status checks ─────────────────────────────────────────────
+  async function checkAll() {
+    checkServer();
+    checkChrome();
+  }
+
+  async function checkServer() {
+    const dot = document.getElementById('server-dot');
+    const status = document.getElementById('server-status');
+    try {
+      const res = await fetch('/api/status');
+      const data = await res.json();
+      if (data.ok) {
+        dot.className = 'dot green';
+        status.textContent = 'Server — connected';
+        serverOnline = true;
+      }
+    } catch(e) {
+      dot.className = 'dot red';
+      status.textContent = 'Server — not running (npm start)';
+      serverOnline = false;
+    }
+  }
+
+  async function checkChrome() {
+    const dot = document.getElementById('chrome-dot');
+    const status = document.getElementById('chrome-status');
+    try {
+      await fetch('http://127.0.0.1:9222/json/version', { mode: 'no-cors' });
+      dot.className = 'dot green';
+      status.textContent = 'Chrome — connected';
+    } catch(e) {
+      dot.className = 'dot yellow';
+      status.textContent = 'Chrome — not found (see setup)';
+    }
+  }
+
+  // ── Setup toggle ──────────────────────────────────────────────
+  function toggleSetup(forceOpen) {
     const body = document.getElementById('setup-body');
     const toggle = document.getElementById('setup-toggle');
-    const open = body.classList.toggle('open');
+    const open = forceOpen !== undefined ? forceOpen : !body.classList.contains('open');
+    body.classList.toggle('open', open);
     toggle.textContent = open ? 'Hide ▴' : 'Show ▾';
   }
 
-  // Toast
+  // ── Toast ─────────────────────────────────────────────────────
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 1800);
+    setTimeout(() => t.classList.remove('show'), 2000);
   }
 
   load();

@@ -1,0 +1,12 @@
+{
+  "name": "linkedin-growth-kit",
+  "version": "1.0.0",
+  "description": "LinkedIn Growth Kit — research, audit, and plan your LinkedIn strategy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

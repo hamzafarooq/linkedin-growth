@@ -91,8 +91,8 @@ Add the Chrome DevTools MCP to your Claude Code settings. In your `~/.claude/set
 Clone this repo and open it in Claude Code:
 
 ```bash
-git clone https://github.com/your-username/linkedin-growth-kit.git
-cd linkedin-growth-kit
+git clone https://github.com/hamzafarooq/linkedin-growth.git
+cd linkedin-growth
 claude
 ```
 

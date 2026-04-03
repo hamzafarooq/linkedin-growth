@@ -78,8 +78,8 @@ app.post('/api/run', (req, res) => {
             }
           }
         } else if (ev.type === 'result') {
-          if (ev.is_error) {
-            send({ type: 'error', text: ev.result || 'Unknown error' });
+          if (ev.result) {
+            send({ type: ev.is_error ? 'error' : 'text', text: ev.result });
           }
           finish(ev.is_error ? 1 : 0);
         } else if (ev.type === 'error') {

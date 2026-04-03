@@ -49,6 +49,14 @@ app.post('/api/run', (req, res) => {
   });
 
   let buffer = '';
+  let finished = false;
+
+  const finish = (code) => {
+    if (finished) return;
+    finished = true;
+    send({ type: 'done', code: code ?? 0 });
+    res.end();
+  };
 
   proc.stdout.on('data', (chunk) => {
     buffer += chunk.toString();
@@ -69,8 +77,11 @@ app.post('/api/run', (req, res) => {
             }
           }
         } else if (ev.type === 'result') {
-          send({ type: 'done', code: 0 });
-        } else if (ev.is_error || ev.type === 'error') {
+          if (ev.is_error) {
+            send({ type: 'error', text: ev.result || 'Unknown error' });
+          }
+          finish(ev.is_error ? 1 : 0);
+        } else if (ev.type === 'error') {
           send({ type: 'error', text: ev.error?.message || JSON.stringify(ev) });
         }
       } catch (e) {
@@ -81,7 +92,7 @@ app.post('/api/run', (req, res) => {
 
   proc.stderr.on('data', (d) => {
     const t = d.toString().trim();
-    if (t) send({ type: 'log', text: t });
+    if (t) send({ type: 'stderr', text: t });
   });
 
   proc.on('error', (err) => {
@@ -90,15 +101,14 @@ app.post('/api/run', (req, res) => {
     } else {
       send({ type: 'error', text: err.message });
     }
-    res.end();
+    finish(1);
   });
 
-  proc.on('close', (code) => {
-    send({ type: 'done', code });
-    res.end();
+  proc.on('close', (code, signal) => {
+    if (!finished) finish(signal ? 1 : (code ?? 1));
   });
 
-  req.on('close', () => proc.kill('SIGTERM'));
+  req.on('close', () => { if (!finished) proc.kill('SIGTERM'); });
 });
 
 const PORT = process.env.PORT || 3000;

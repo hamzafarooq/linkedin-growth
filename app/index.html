@@ -887,8 +887,8 @@ npm start</pre>
       appendLine(body, `<span class="out-text">${escapeHtml(ev.text)}</span>`);
     } else if (ev.type === 'tool') {
       appendLine(body, `<span class="out-tool">→ ${escapeHtml(ev.text)}</span>\n`);
-    } else if (ev.type === 'log') {
-      // skip noisy logs
+    } else if (ev.type === 'stderr') {
+      appendLine(body, `<span class="out-log">${escapeHtml(ev.text)}</span>\n`);
     } else if (ev.type === 'error') {
       appendLine(body, `<span class="out-error">Error: ${escapeHtml(ev.text)}</span>`);
     } else if (ev.type === 'done') {

@@ -41,6 +41,7 @@ app.post('/api/run', (req, res) => {
     '--dangerously-skip-permissions',
     '--output-format', 'stream-json',
     '--include-partial-messages',
+    '--verbose',
     '-p', trimmed
   ], {
     cwd: __dirname,

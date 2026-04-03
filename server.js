@@ -102,8 +102,18 @@ app.post('/api/run', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`\nLinkedIn Growth Kit running at http://localhost:${PORT}\n`);
   console.log('Open that URL in your browser.');
   console.log('Keep this terminal running while you use the app.\n');
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\nPort ${PORT} is already in use.`);
+    console.error(`Kill it with:  lsof -ti :${PORT} | xargs kill -9\n`);
+  } else {
+    console.error(err);
+  }
+  process.exit(1);
 });

@@ -761,13 +761,13 @@ npm start</pre>
     const yourSlug = slugFromUrl(yourUrl);
     const validProfiles = profiles.filter(p => p.url.trim());
 
-    researchCmds = validProfiles.map(p => `/linkedin_profile_research ${p.url.trim()}`);
+    researchCmds = validProfiles.map(p => `/linkedin-profile-research ${p.url.trim()}`);
 
     const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
     const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
 
-    auditCmd = yourUrl ? `/analyze_your_linkedin_profile ${yourUrl}${vsStr}` : '';
-    plannerCmd = yourSlug ? `/linkedin_content_planner ${yourSlug}${vsStr}` : '';
+    auditCmd = yourUrl ? `/analyze-your-linkedin-profile ${yourUrl}${vsStr}` : '';
+    plannerCmd = yourSlug ? `/linkedin-content-planner ${yourSlug}${vsStr}` : '';
 
     // Render research
     const researchDiv = document.getElementById('research-cmds');

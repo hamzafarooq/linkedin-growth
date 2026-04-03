@@ -7,9 +7,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'app')));
 
 const ALLOWED_PREFIXES = [
-  '/linkedin_profile_research',
-  '/analyze_your_linkedin_profile',
-  '/linkedin_content_planner'
+  '/linkedin-profile-research',
+  '/analyze-your-linkedin-profile',
+  '/linkedin-content-planner'
 ];
 
 app.get('/api/status', (req, res) => {

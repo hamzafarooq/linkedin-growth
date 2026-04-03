@@ -491,12 +491,12 @@
   <div class="mcp-banner">
     <div class="mcp-icon">🔌</div>
     <div>
-      <h3>Chrome MCP required — one-time setup</h3>
-      <p>The skills control a real Chrome browser to read LinkedIn. You need Chrome running with remote debugging <strong>and</strong> the Puppeteer MCP server wired into Claude Code. Do this once and you're set.</p>
+      <h3>Brave MCP required — one-time setup</h3>
+      <p>The skills control a real Brave browser to read LinkedIn. You need Brave running with remote debugging <strong>and</strong> the Puppeteer MCP server wired into Claude Code. Do this once and you're set.</p>
       <div class="mcp-steps">
         <div class="mcp-step">
           <div class="n">1</div>
-          <span>Launch Chrome with <code>--remote-debugging-port=9222</code> — see the Setup Guide below for the exact command.</span>
+          <span>Launch Brave with <code>--remote-debugging-port=9222</code> — see the Setup Guide below for the exact command.</span>
         </div>
         <div class="mcp-step">
           <div class="n">2</div>
@@ -504,7 +504,7 @@
         </div>
         <div class="mcp-step">
           <div class="n">3</div>
-          <span>Log into LinkedIn in that Chrome window. The skills need an active session to read profile data.</span>
+          <span>Log into LinkedIn in that Brave window. The skills need an active session to read profile data.</span>
         </div>
       </div>
     </div>
@@ -519,7 +519,7 @@
     </div>
     <div class="status-item">
       <div class="dot yellow" id="chrome-dot"></div>
-      <span id="chrome-status">Chrome — not verified</span>
+      <span id="chrome-status">Brave — not verified</span>
     </div>
     <div class="status-item" style="margin-left: auto;">
       <div class="dot" id="li-dot"></div>
@@ -646,17 +646,17 @@ npm start</pre>
       </div>
 
       <div class="setup-step">
-        <h3>3. Launch Chrome with remote debugging</h3>
-        <p>Regular Chrome won't work — it must be launched with this flag.</p>
-        <pre>/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+        <h3>3. Launch Brave with remote debugging</h3>
+        <p>Regular Brave won't work — it must be launched with this flag.</p>
+        <pre>/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser \
   --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-debug</pre>
+  --user-data-dir=/tmp/brave-debug</pre>
         <p style="margin-top:8px;">Verify it's running:</p>
         <pre>curl -s http://127.0.0.1:9222/json/version</pre>
       </div>
 
       <div class="setup-step">
-        <h3>4. Add Chrome MCP to Claude Code</h3>
+        <h3>4. Add Brave MCP to Claude Code</h3>
         <p>Add this to <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:0.78rem;">~/.claude/settings.json</code>:</p>
         <pre>{
   "mcpServers": {
@@ -673,7 +673,7 @@ npm start</pre>
 
       <div class="setup-step">
         <h3>5. Log into LinkedIn</h3>
-        <p>In the Chrome window you just opened, go to <strong>linkedin.com</strong> and sign in.</p>
+        <p>In the Brave window you just opened, go to <strong>linkedin.com</strong> and sign in.</p>
       </div>
 
     </div>
@@ -1019,10 +1019,10 @@ npm start</pre>
     try {
       await fetch('http://127.0.0.1:9222/json/version', { mode: 'no-cors' });
       dot.className = 'dot green';
-      status.textContent = 'Chrome — connected';
+      status.textContent = 'Brave — connected';
     } catch(e) {
       dot.className = 'dot yellow';
-      status.textContent = 'Chrome — not found (see setup)';
+      status.textContent = 'Brave — not found (see setup)';
     }
   }
 

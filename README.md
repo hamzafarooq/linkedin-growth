@@ -1,279 +1,118 @@
 # LinkedIn Growth Kit
 
-A Claude Code skill suite for LinkedIn growth — research creators who inspire you, audit your own profile, and build a 30-day content strategy. All powered by browser automation (no API keys required).
+Study the LinkedIn profiles you admire, audit your own, and walk away with a 30-day content plan — all by running a few commands in Claude Code.
 
 ---
 
-## What This Does
+## What this does
 
-Three connected skills form a pipeline:
+Most people guess at what works on LinkedIn. This kit takes a different approach: it reads the actual posts of creators doing well in your space, compares that to what you've been posting, and builds you a personalised content strategy based on real patterns — not generic advice.
 
-```
-1. Research LinkedIn profiles of creators you admire
-          ↓
-2. Audit your own LinkedIn profile against those benchmarks
-          ↓
-3. Build a 30-day content strategy based on what you learn
-```
+There are three steps, and you can do all three in one session:
 
-All data comes from public LinkedIn profiles via browser automation. No Meta API, no LinkedIn API, no credentials beyond your own LinkedIn login.
+**Step 1 — Learn from creators you admire**
+Point the kit at any public LinkedIn profile. It reads their posts, figures out what topics they cover, how they write, what kinds of posts get engagement, and packages all of that into a report for you.
 
----
+**Step 2 — Audit your own profile**
+The kit does the same analysis on your profile, then compares the two. You'll see exactly where the gaps are: topics you're not covering, formats you're not using, things that are working that you should do more of.
 
-## Prerequisites
-
-### 1. Claude Code
-
-Install Claude Code (the CLI):
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-Requires an Anthropic API key. Get one at [console.anthropic.com](https://console.anthropic.com).
-
-### 2. Chrome with Remote Debugging (Required)
-
-The skills use browser automation via the Chrome DevTools MCP. Chrome must be launched with a remote debugging port — **regular Chrome will not work**.
-
-**Mac:**
-```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-debug
-```
-
-**Windows:**
-```cmd
-"C:\Program Files\Google\Chrome\Application\chrome.exe" ^
-  --remote-debugging-port=9222 ^
-  --user-data-dir=C:\chrome-debug
-```
-
-**Linux:**
-```bash
-google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
-```
-
-Verify it's running:
-```bash
-curl -s http://127.0.0.1:9222/json/version
-```
-
-You should see a JSON response with browser version info.
-
-> **Important:** Log into LinkedIn in this Chrome instance before running any skill. The skills need an active LinkedIn session to access profile data.
-
-### 3. Chrome DevTools MCP
-
-Add the Chrome DevTools MCP to your Claude Code settings. In your `~/.claude/settings.json` (or the project `.claude/settings.json`):
-
-```json
-{
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
-      "env": {
-        "PUPPETEER_WS_ENDPOINT": "ws://127.0.0.1:9222"
-      }
-    }
-  }
-}
-```
-
-> **Alternative:** Some setups use `@anthropic-ai/mcp-server-puppeteer` or a direct CDP connection. Use whichever Chrome/CDP MCP server you have installed. The key is that it connects to `localhost:9222`.
+**Step 3 — Get your 30-day content plan**
+Using everything it learned, the kit builds you a full month of content — a calendar with one post per slot, a detailed brief for each one (what to write, how to open it, what to ask at the end), and guidelines for your voice and tone.
 
 ---
 
-## Quick Start
+## What you need before you start
 
-Clone this repo and open it in Claude Code:
+### Claude Code
 
-```bash
-git clone https://github.com/your-username/linkedin-growth-kit.git
-cd linkedin-growth-kit
-claude
-```
+This kit runs inside Claude Code, Anthropic's AI coding assistant. If you don't have it yet:
 
-Then run skills directly in the Claude Code session:
+1. Make sure you have [Node.js](https://nodejs.org) installed (it's free)
+2. Open your terminal and run:
+   ```
+   npm install -g @anthropic-ai/claude-code
+   ```
+3. You'll need an Anthropic API key — get one free at [console.anthropic.com](https://console.anthropic.com)
 
-```
-# Research a creator you admire
-/linkedin_profile_research https://www.linkedin.com/in/someone/
+### Brave Browser with the Brave MCP
 
-# Audit your own profile
-/analyze_your_linkedin_profile https://www.linkedin.com/in/you/
+The kit browses LinkedIn the same way you would — by actually opening the page and reading it. It uses your Brave browser to do this.
 
-# Build your 30-day content plan
-/linkedin_content_planner
-```
+You need the **Brave MCP** configured in your Claude Code settings. This is a small plugin that lets Claude Code control the browser. If you're not sure whether you have it set up, check with whoever set up your Claude Code environment, or follow the [Brave MCP setup guide](https://github.com/anthropics/claude-code).
+
+**Important:** Before running any step, log into LinkedIn in Brave. The kit needs you to be logged in so it can read profile pages the way you normally would.
 
 ---
 
-## The Skills
+## How to use it
 
-### `/linkedin_profile_research {linkedin-url}`
+### The easy way — use the visual helper
 
-Analyzes any LinkedIn profile — a creator you follow, someone whose content you want to learn from, or a colleague in your space. Extracts:
+Open the file `app/index.html` in your browser (just double-click it). You'll see a simple form:
 
-- Content pillars and posting frequency
-- Post formats that get the most engagement
-- Messaging patterns and recurring themes
-- Audience signals (who engages, what resonates)
-- Top-performing posts with deep-dive analysis
+1. Paste your LinkedIn profile URL
+2. Paste the URLs of people you want to learn from
+3. The page generates the exact commands for you to copy
 
-**Output:** `output/linkedin-research/{profile-slug}/MASTER-REPORT.md`
+Then paste those commands into Claude Code, one at a time, and let it run.
 
-```bash
-# Research a single profile
-/linkedin_profile_research https://www.linkedin.com/in/someone/
+### The direct way — type commands in Claude Code
 
-# Go deeper on top posts
-/linkedin_profile_research https://www.linkedin.com/in/someone/ top 10
+Open this folder in Claude Code (open your terminal, navigate to this folder, type `claude`). Then run:
 
-# Analyze every post
-/linkedin_profile_research https://www.linkedin.com/in/someone/ all
 ```
+/linkedin-profile-research https://www.linkedin.com/in/someone-you-admire/
+```
+
+Wait for it to finish, then:
+
+```
+/analyze-your-linkedin-profile https://www.linkedin.com/in/your-profile/
+```
+
+Then finally:
+
+```
+/linkedin-content-planner your-name vs someone-you-admire
+```
+
+Replace the URLs and names with your actual details.
 
 ---
 
-### `/analyze_your_linkedin_profile {your-linkedin-url}`
+## What you get out
 
-Audits your own LinkedIn profile. Compare your content strategy against any profiles you've already researched. Identifies:
+Everything is saved as readable files in the `output/` folder:
 
-- What you're doing well (double down on it)
-- Gaps in content, format, and messaging
-- Specific opportunities ranked by impact
-- A 30-day action plan
+**After Step 1 (research):**
+`output/linkedin-research/their-name/MASTER-REPORT.md`
+A breakdown of their content strategy — their topics, their writing patterns, their top posts, and what you can take from it.
 
-**Output:** `output/linkedin-audit/{your-slug}/`
+**After Step 2 (your audit):**
+`output/linkedin-audit/your-name/`
+An honest look at your current LinkedIn presence, what's working, where the gaps are, and a 30-day action plan.
 
-```bash
-# Audit your profile standalone
-/analyze_your_linkedin_profile https://www.linkedin.com/in/you/
-
-# Benchmark against a profile you researched
-/analyze_your_linkedin_profile https://www.linkedin.com/in/you/ vs someone
-```
+**After Step 3 (content plan):**
+`output/linkedin-strategy/your-name/`
+Your full 30-day content calendar, with a detailed brief for every single post — ready to write from.
 
 ---
 
-### `/linkedin_content_planner`
+## Tips
 
-Builds a full 30-day content strategy. Synthesizes your audit + any profile research into:
+**Research more than one person.** The more profiles you study before your audit, the richer the comparison. Two or three is a good starting point.
 
-- 3-4 content pillars with post allocation
-- Day-by-day calendar (20-24 posts)
-- Detailed brief for every single post (hook, copy, CTA, why it works)
-- Messaging guidelines and voice notes
-- Execution checklist
+**You can skip straight to the audit.** If you don't want to research anyone else first, just run Step 2 on your own profile and then Step 3. You'll still get a solid content plan.
 
-**Output:** `output/linkedin-strategy/{your-slug}/`
+**The output files are yours to edit.** Nothing gets posted automatically. Everything lands in your `output/` folder as plain text — read it, adjust it, use what's useful.
 
-```bash
-/linkedin_content_planner
-/linkedin_content_planner your-slug              # auto-load your audit
-/linkedin_content_planner you vs someone         # leverage profile research
-```
+**LinkedIn can be slow to load.** If a step seems to hang, give it a moment. The kit is scrolling through posts the same way you would, and some profiles have a lot of them.
 
 ---
 
-## Suggested Workflows
+## Privacy
 
-### Quick benchmark (10 min)
-```
-/linkedin_profile_research https://www.linkedin.com/in/someone/
-```
-Read `output/linkedin-research/someone/MASTER-REPORT.md` — understand what's working for creators in your space.
-
-### Full strategy (45-60 min)
-```
-/linkedin_profile_research https://www.linkedin.com/in/someone-you-admire/
-/linkedin_profile_research https://www.linkedin.com/in/another-creator/
-/analyze_your_linkedin_profile https://www.linkedin.com/in/you/
-/linkedin_content_planner
-```
-You'll have a complete month of content ready to publish.
-
-### Profile-first approach (30 min)
-```
-/analyze_your_linkedin_profile https://www.linkedin.com/in/you/
-/linkedin_content_planner
-```
-Skip the research phase and go straight to auditing + planning.
-
----
-
-## Output Structure
-
-```
-output/
-├── linkedin-research/
-│   └── {profile-slug}/
-│       ├── MASTER-REPORT.md          ← start here
-│       ├── {slug}-strategy-report.html
-│       ├── deep-dives/               ← top post analyses
-│       └── posts/                    ← raw post data
-│
-├── linkedin-audit/
-│   └── {your-slug}/
-│       ├── {slug}-linkedin-audit.md  ← your profile audit
-│       ├── 30-DAY-ACTION-PLAN.md
-│       └── BENCHMARK-COMPARISON.md
-│
-└── linkedin-strategy/
-    └── {your-slug}/
-        ├── STRATEGY.md
-        ├── 30-DAY-CALENDAR.md
-        ├── POST-BRIEFS.md            ← one brief per post
-        ├── MESSAGING-GUIDE.md
-        └── EXECUTION-CHECKLIST.md
-```
-
----
-
-## Frontend Dashboard
-
-Open `app/index.html` in any browser for a visual interface. It lets you:
-
-- Enter your LinkedIn URL and profiles you want to learn from
-- See the pipeline steps in order
-- Generate the exact Claude Code commands to run
-- Track which steps you've completed
-
-No server required — it's a static HTML file.
-
----
-
-## Troubleshooting
-
-**Chrome MCP not connecting:**
-- Make sure Chrome was launched with `--remote-debugging-port=9222`
-- Check: `curl -s http://127.0.0.1:9222/json/version`
-- Regular Chrome (opened normally) will not work
-
-**LinkedIn not loading / profile not found:**
-- Make sure you're logged into LinkedIn in the debug Chrome instance
-- Try navigating to the profile manually in that Chrome window first
-- Some profiles have limited visibility — the skill will report what it can access
-
-**No posts captured:**
-- LinkedIn lazy-loads posts — the skill scrolls automatically, but very sparse profiles may have limited data
-- Try appending `all` to capture everything available
-
-**Rate limiting from LinkedIn:**
-- Add pauses between runs if researching many profiles in sequence
-- LinkedIn throttles heavy activity — space out your research sessions
-
----
-
-## Notes
-
-- All data is from **public LinkedIn profiles only**
-- No private messages, gated content, or authenticated data is accessed
-- Respects LinkedIn's public data visibility settings
-- This tool is for personal research and content strategy, not bulk data collection
+The kit only reads public LinkedIn profiles — the same pages anyone can see by visiting the URL. It does not access private messages, connection data, or anything behind a login wall other than the standard feed visibility you get when logged in.
 
 ---
 

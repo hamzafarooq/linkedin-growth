@@ -294,6 +294,12 @@ Which would you like to do?"
 
 ## Error Handling
 
+**Browser Automation:**
+- Use the Brave MCP (`mcp__brave-devtools__*` tools) to navigate LinkedIn
+- Use `mcp__brave-devtools__browser_navigate` to load your profile
+- Use `mcp__brave-devtools__browser_evaluate` to extract profile data and posts
+- LinkedIn requires an active session — user must be logged into LinkedIn in Brave
+
 **Can't access your LinkedIn profile:**
 - Check URL is correct
 - Verify profile is public

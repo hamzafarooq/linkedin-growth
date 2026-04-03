@@ -13,8 +13,6 @@
       --accent: #4f7cff;
       --accent2: #7c5cfc;
       --green: #22c55e;
-      --yellow: #f59e0b;
-      --red: #ef4444;
       --text: #e8eaf6;
       --muted: #8892b0;
       --radius: 12px;
@@ -30,11 +28,11 @@
       padding: 40px 20px;
     }
 
-    .container { max-width: 860px; margin: 0 auto; }
+    .container { max-width: 760px; margin: 0 auto; }
 
     header { text-align: center; margin-bottom: 48px; }
     header h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
@@ -42,36 +40,7 @@
       background-clip: text;
       margin-bottom: 8px;
     }
-    header p { color: var(--muted); font-size: 1rem; }
-
-    .status-bar {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 32px;
-      padding: 14px 18px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .status-bar span { font-size: 0.8rem; color: var(--muted); }
-    .status-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.82rem;
-    }
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-    }
-    .dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
-    .dot.yellow { background: var(--yellow); }
-    .dot.red { background: var(--red); }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .dot.pulsing { background: var(--accent); animation: pulse 1.2s infinite; }
+    header p { color: var(--muted); font-size: 0.95rem; }
 
     .card {
       background: var(--surface);
@@ -80,8 +49,9 @@
       padding: 24px;
       margin-bottom: 20px;
     }
+
     .card h2 {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text);
@@ -89,961 +59,352 @@
       align-items: center;
       gap: 10px;
     }
-    .card h2 .step-num {
+
+    .step-num {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: white;
-      width: 26px; height: 26px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       flex-shrink: 0;
     }
 
-    .input-group { margin-bottom: 14px; }
     label {
       display: block;
       font-size: 0.8rem;
       color: var(--muted);
       margin-bottom: 6px;
-      font-weight: 500;
     }
-    input[type="text"] {
+
+    input[type="url"], input[type="text"] {
       width: 100%;
-      padding: 10px 14px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 8px;
+      padding: 10px 14px;
       color: var(--text);
       font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s;
     }
-    input[type="text"]:focus { border-color: var(--accent); }
-    input[type="text"]::placeholder { color: var(--border); }
 
-    .profiles-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    input:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); opacity: 0.6; }
+
     .profile-row {
       display: flex;
       gap: 8px;
+      margin-bottom: 8px;
       align-items: center;
     }
+
     .profile-row input { flex: 1; }
-    .profile-row .label-input {
-      width: 140px;
-      flex-shrink: 0;
-    }
-    .remove-btn {
+
+    .btn-remove {
       background: none;
       border: 1px solid var(--border);
+      border-radius: 6px;
       color: var(--muted);
       cursor: pointer;
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 0.8rem;
-      transition: all 0.2s;
-      white-space: nowrap;
+      padding: 6px 10px;
+      font-size: 1rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: border-color 0.15s, color 0.15s;
     }
-    .remove-btn:hover { border-color: var(--red); color: var(--red); }
 
-    .add-btn {
+    .btn-remove:hover { border-color: #ef4444; color: #ef4444; }
+
+    .btn-add {
       background: none;
       border: 1px dashed var(--border);
+      border-radius: 8px;
       color: var(--muted);
       cursor: pointer;
-      border-radius: 8px;
-      padding: 9px 16px;
+      padding: 8px 14px;
       font-size: 0.82rem;
       width: 100%;
-      transition: all 0.2s;
+      margin-top: 4px;
+      transition: border-color 0.15s, color 0.15s;
     }
-    .add-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    .col-labels {
+    .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+
+    .commands-section {
+      margin-top: 8px;
+    }
+
+    .command-block {
+      margin-bottom: 16px;
+    }
+
+    .command-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .command-label .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+
+    .command-copy {
       display: flex;
       gap: 8px;
-      margin-bottom: 6px;
+      align-items: stretch;
     }
-    .col-labels span { font-size: 0.75rem; color: var(--muted); }
-    .col-labels span:first-child { flex: 1; }
-    .col-labels span:nth-child(2) { width: 140px; flex-shrink: 0; }
-    .col-labels span:last-child { width: 56px; flex-shrink: 0; }
+
+    .command-text {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--text);
+      word-break: break-all;
+      white-space: pre-wrap;
+      min-height: 42px;
+    }
+
+    .command-text.empty { color: var(--muted); font-style: italic; font-family: inherit; }
+
+    .btn-copy {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0 14px;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover { background: var(--accent); border-color: var(--accent); color: white; }
+    .btn-copy.copied { background: var(--green); border-color: var(--green); color: white; }
 
     .pipeline {
       display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .pipeline-step {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .pipeline-line {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      flex-shrink: 0;
-      width: 28px;
-    }
-    .pipeline-circle {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--surface2);
-      border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-    .pipeline-circle.active {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: transparent;
-      color: white;
-    }
-    .pipeline-circle.done {
-      background: var(--green);
-      border-color: transparent;
-      color: white;
-    }
-    .pipeline-connector {
-      width: 2px;
-      height: 32px;
-      background: var(--border);
-      margin: 3px 0;
-    }
-    .pipeline-content { padding-top: 4px; padding-bottom: 24px; flex: 1; min-width: 0; }
-    .pipeline-content h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
-    .pipeline-content p { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
-
-    .cmd-box {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.82rem;
-      color: #a8dadc;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-    .cmd-box:hover { border-color: var(--accent); }
-    .cmd-text { flex: 1; word-break: break-all; }
-    .copy-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.75rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      transition: all 0.2s;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .copy-btn:hover { color: var(--accent); }
-    .copy-btn.copied { color: var(--green); }
-
-    .run-btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 4px;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-      flex-shrink: 0;
-      font-weight: 600;
-    }
-    .run-btn:hover { opacity: 0.85; }
-    .run-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-    .cmd-empty {
-      color: var(--border);
-      font-style: italic;
-    }
-
-    /* Output terminal */
-    .output-area {
-      margin-top: 10px;
-      background: #0a0c12;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      display: none;
-    }
-    .output-area.visible { display: block; }
-    .output-header {
-      padding: 6px 12px;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .output-header .status-label { flex: 1; }
-    .output-header .clear-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.7rem;
-      padding: 1px 6px;
-      border-radius: 3px;
-    }
-    .output-header .clear-btn:hover { color: var(--text); }
-    .output-body {
-      padding: 12px 14px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.78rem;
-      max-height: 420px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.6;
-    }
-    .out-cmd { color: var(--accent); font-weight: bold; margin-bottom: 6px; display: block; }
-    .out-text { color: #c8d8e8; }
-    .out-tool { color: var(--muted); font-style: italic; }
-    .out-log { color: #5a6080; }
-    .out-done { color: var(--green); font-weight: bold; margin-top: 6px; display: block; }
-    .out-error { color: var(--red); }
-
-    .action-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .generate-btn {
-      flex: 1;
-      padding: 13px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .generate-btn:hover { border-color: var(--accent); color: var(--text); }
-
-    .run-all-btn {
-      flex: 1;
-      padding: 13px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .run-all-btn:hover { opacity: 0.9; }
-    .run-all-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-    .setup-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .setup-header {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      user-select: none;
-    }
-    .setup-header h2 { font-size: 0.95rem; font-weight: 600; }
-    .setup-toggle { color: var(--muted); font-size: 0.8rem; }
-    .setup-body { padding: 0 20px 20px; display: none; }
-    .setup-body.open { display: block; }
-
-    .setup-step {
-      margin-bottom: 18px;
-      padding-left: 16px;
-      border-left: 2px solid var(--border);
-    }
-    .setup-step h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
-    .setup-step p { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
-    pre {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: #a8dadc;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-
-    footer {
-      text-align: center;
-      padding-top: 32px;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* Chrome MCP banner */
-    .mcp-banner {
-      background: var(--surface);
-      border: 1px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      margin-bottom: 20px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .mcp-banner .mcp-icon {
-      font-size: 1.3rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .mcp-banner h3 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-    .mcp-banner p {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-    .mcp-banner code {
-      background: var(--bg);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: #a8dadc;
-    }
-    .mcp-steps {
-      display: flex;
-      flex-direction: column;
       gap: 6px;
+      margin-bottom: 20px;
     }
-    .mcp-step {
-      display: flex;
-      gap: 10px;
-      align-items: baseline;
-      font-size: 0.82rem;
-    }
-    .mcp-step .n {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .mcp-step span { color: var(--muted); flex: 1; line-height: 1.4; }
-    .mcp-step code { font-size: 0.75rem; }
 
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
+    .pipeline-step {
+      flex: 1;
       background: var(--surface2);
-      border: 1px solid var(--green);
-      color: var(--green);
-      padding: 10px 18px;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.85rem;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.25s;
-      pointer-events: none;
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
     }
-    .toast.show { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.6rem; }
-      .col-labels, .profile-row { flex-wrap: wrap; }
-      .profile-row .label-input { width: 100%; }
-      .action-row { flex-direction: column; }
+    .pipeline-arrow { color: var(--border); font-size: 1rem; }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .hint code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: var(--bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
     }
   </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <header>
+      <h1>LinkedIn Growth Kit</h1>
+      <p>Paste your URLs, copy the commands, run them in Claude Code.</p>
+    </header>
 
-  <header>
-    <h1>LinkedIn Growth Kit</h1>
-    <p>Research creators you admire · audit your profile · build your content strategy</p>
-  </header>
-
-  <!-- Chrome MCP callout -->
-  <div class="mcp-banner">
-    <div class="mcp-icon">🔌</div>
-    <div>
-      <h3>Brave MCP required — one-time setup</h3>
-      <p>The skills control a real Brave browser to read LinkedIn. You need Brave running with remote debugging <strong>and</strong> the Puppeteer MCP server wired into Claude Code. Do this once and you're set.</p>
-      <div class="mcp-steps">
-        <div class="mcp-step">
-          <div class="n">1</div>
-          <span>Launch Brave with <code>--remote-debugging-port=9222</code> — see the Setup Guide below for the exact command.</span>
-        </div>
-        <div class="mcp-step">
-          <div class="n">2</div>
-          <span>Add the Puppeteer MCP server to <code>~/.claude/settings.json</code> so Claude Code can drive that browser — full snippet in the Setup Guide.</span>
-        </div>
-        <div class="mcp-step">
-          <div class="n">3</div>
-          <span>Log into LinkedIn in that Brave window. The skills need an active session to read profile data.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Status bar -->
-  <div class="status-bar">
-    <span>Status:</span>
-    <div class="status-item">
-      <div class="dot yellow" id="server-dot"></div>
-      <span id="server-status">Server — checking...</span>
-    </div>
-    <div class="status-item">
-      <div class="dot yellow" id="chrome-dot"></div>
-      <span id="chrome-status">Brave — not verified</span>
-    </div>
-    <div class="status-item" style="margin-left: auto;">
-      <div class="dot" id="li-dot"></div>
-      <span id="li-status">LinkedIn — unknown</span>
-    </div>
-    <button onclick="checkAll()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;">Check</button>
-  </div>
-
-  <!-- Step 1 -->
-  <div class="card">
-    <h2><span class="step-num">1</span> Your LinkedIn profile</h2>
-    <div class="input-group">
+    <!-- Step 1: Your URL -->
+    <div class="card">
+      <h2><span class="step-num">1</span> Your LinkedIn Profile</h2>
       <label>Your LinkedIn URL</label>
-      <input type="text" id="your-url" placeholder="https://www.linkedin.com/in/you/" oninput="save(); updateCommands()">
+      <input type="url" id="your-url" placeholder="https://www.linkedin.com/in/yourname/" oninput="updateCommands()">
+    </div>
+
+    <!-- Step 2: Profiles to learn from -->
+    <div class="card">
+      <h2><span class="step-num">2</span> Profiles to Learn From</h2>
+      <div id="research-list">
+        <div class="profile-row">
+          <input type="url" placeholder="https://www.linkedin.com/in/someone/" oninput="updateCommands()">
+          <button class="btn-remove" onclick="removeRow(this)" title="Remove">×</button>
+        </div>
+      </div>
+      <button class="btn-add" onclick="addRow()">+ Add another profile</button>
+    </div>
+
+    <!-- Step 3: Commands -->
+    <div class="card">
+      <h2><span class="step-num">3</span> Run in Claude Code</h2>
+
+      <div class="pipeline">
+        <div class="pipeline-step">Research profiles</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">Audit your profile</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">Build strategy</div>
+      </div>
+
+      <div class="commands-section" id="commands-section">
+        <div class="command-block" id="block-research"></div>
+        <div class="divider" id="div1" style="display:none"></div>
+        <div class="command-block" id="block-audit"></div>
+        <div class="divider" id="div2" style="display:none"></div>
+        <div class="command-block" id="block-plan"></div>
+      </div>
+
+      <div class="hint">
+        Open Claude Code in your terminal and paste each command. Make sure you're <strong>logged into LinkedIn in Brave</strong> before running.
+      </div>
     </div>
   </div>
 
-  <!-- Step 2 -->
-  <div class="card">
-    <h2><span class="step-num">2</span> Profiles to learn from</h2>
-    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">Add LinkedIn profiles of creators, colleagues, or people in your space whose content you want to study.</p>
+  <script>
+    function slugify(url) {
+      try {
+        const u = new URL(url.trim());
+        const parts = u.pathname.replace(/^\/|\/$/g, '').split('/');
+        // /in/username or /company/name
+        if (parts.length >= 2) return parts[1];
+        return parts[0] || '';
+      } catch { return ''; }
+    }
 
-    <div class="col-labels">
-      <span>LinkedIn URL</span>
-      <span>Label (optional)</span>
-      <span></span>
-    </div>
+    function getResearchURLs() {
+      return Array.from(document.querySelectorAll('#research-list input'))
+        .map(i => i.value.trim())
+        .filter(v => v.length > 0);
+    }
 
-    <div class="profiles-list" id="profiles-list"></div>
-    <button class="add-btn" onclick="addProfile()">+ Add profile</button>
-  </div>
-
-  <!-- Step 3 -->
-  <div class="card">
-    <h2><span class="step-num">3</span> Run your pipeline</h2>
-    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;">Click <strong>▶ Run</strong> next to each step, or <strong>▶ Run All</strong> to execute the full pipeline automatically.</p>
-
-    <div class="pipeline" id="pipeline">
-
-      <div class="pipeline-step">
-        <div class="pipeline-line">
-          <div class="pipeline-circle active" id="circle-1">1</div>
-          <div class="pipeline-connector"></div>
+    function renderCommand(container, label, tag, text) {
+      const isEmpty = !text;
+      container.innerHTML = `
+        <div class="command-label">
+          ${label} <span class="tag">${tag}</span>
         </div>
-        <div class="pipeline-content">
-          <h3>Research profiles</h3>
-          <p>Extract content strategy from each profile you want to learn from.</p>
-          <div id="research-cmds"></div>
-          <div class="output-area" id="out-research">
-            <div class="output-header">
-              <span class="status-label" id="out-research-label">Ready</span>
-              <button class="clear-btn" onclick="clearOutput('out-research')">clear</button>
-            </div>
-            <div class="output-body" id="out-research-body"></div>
-          </div>
+        <div class="command-copy">
+          <div class="command-text${isEmpty ? ' empty' : ''}">${isEmpty ? 'Fill in your URL above to generate this command' : escHtml(text)}</div>
+          ${!isEmpty ? `<button class="btn-copy" onclick="copyCmd(this, ${JSON.stringify(text)})">Copy</button>` : ''}
         </div>
-      </div>
+      `;
+    }
 
-      <div class="pipeline-step">
-        <div class="pipeline-line">
-          <div class="pipeline-circle active" id="circle-2">2</div>
-          <div class="pipeline-connector"></div>
-        </div>
-        <div class="pipeline-content">
-          <h3>Audit your profile</h3>
-          <p>Analyze your LinkedIn presence and benchmark it against the profiles you researched.</p>
-          <div id="audit-cmd"></div>
-          <div class="output-area" id="out-audit">
-            <div class="output-header">
-              <span class="status-label" id="out-audit-label">Ready</span>
-              <button class="clear-btn" onclick="clearOutput('out-audit')">clear</button>
-            </div>
-            <div class="output-body" id="out-audit-body"></div>
-          </div>
-        </div>
-      </div>
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
 
-      <div class="pipeline-step">
-        <div class="pipeline-line">
-          <div class="pipeline-circle active" id="circle-3">3</div>
-        </div>
-        <div class="pipeline-content">
-          <h3>Build your content strategy</h3>
-          <p>Generate a 30-day calendar with a detailed brief for every post.</p>
-          <div id="planner-cmd"></div>
-          <div class="output-area" id="out-planner">
-            <div class="output-header">
-              <span class="status-label" id="out-planner-label">Ready</span>
-              <button class="clear-btn" onclick="clearOutput('out-planner')">clear</button>
-            </div>
-            <div class="output-body" id="out-planner-body"></div>
-          </div>
-        </div>
-      </div>
+    function updateCommands() {
+      const yourUrl = document.getElementById('your-url').value.trim();
+      const researchURLs = getResearchURLs();
+      const yourSlug = slugify(yourUrl);
+      const firstResearchSlug = researchURLs.length > 0 ? slugify(researchURLs[0]) : '';
 
-    </div>
+      const blockResearch = document.getElementById('block-research');
+      const blockAudit = document.getElementById('block-audit');
+      const blockPlan = document.getElementById('block-plan');
+      const div1 = document.getElementById('div1');
+      const div2 = document.getElementById('div2');
 
-    <div class="action-row">
-      <button class="generate-btn" onclick="copyAll()">Copy all commands</button>
-      <button class="run-all-btn" id="run-all-btn" onclick="runAll()">▶ Run All</button>
-    </div>
-  </div>
+      // Research commands (one per URL)
+      if (researchURLs.length > 0) {
+        const cmds = researchURLs.map(u => `/linkedin-profile-research ${u}`).join('\n');
+        renderCommand(blockResearch, 'Step 1 — Research profiles you want to learn from', 'run in Claude Code', cmds);
+        div1.style.display = '';
+      } else {
+        renderCommand(blockResearch, 'Step 1 — Research profiles you want to learn from', 'run in Claude Code', '');
+        div1.style.display = 'none';
+      }
 
-  <!-- Setup guide -->
-  <div class="setup-card" style="margin-bottom:20px;">
-    <div class="setup-header" onclick="toggleSetup()">
-      <h2>Setup guide</h2>
-      <span class="setup-toggle" id="setup-toggle">Show ▾</span>
-    </div>
-    <div class="setup-body" id="setup-body">
+      // Audit command
+      if (yourUrl) {
+        const vsFlag = firstResearchSlug ? ` vs ${firstResearchSlug}` : '';
+        const cmd = `/analyze-your-linkedin-profile ${yourUrl}${vsFlag}`;
+        renderCommand(blockAudit, 'Step 2 — Audit your own profile', 'run in Claude Code', cmd);
+        div2.style.display = '';
+      } else {
+        renderCommand(blockAudit, 'Step 2 — Audit your own profile', 'run in Claude Code', '');
+        div2.style.display = 'none';
+      }
 
-      <div class="setup-step">
-        <h3>1. Install Claude Code</h3>
-        <p>Requires Node.js 18+ and an Anthropic account.</p>
-        <pre>npm install -g @anthropic-ai/claude-code</pre>
-      </div>
-
-      <div class="setup-step">
-        <h3>2. Start the local server</h3>
-        <p>Run once from the repo directory — this powers the Run buttons.</p>
-        <pre>npm install
-npm start</pre>
-        <p style="margin-top:8px;">Then open <strong>http://localhost:3000</strong> in your browser.</p>
-      </div>
-
-      <div class="setup-step">
-        <h3>3. Launch Brave with remote debugging</h3>
-        <p>Regular Brave won't work — it must be launched with this flag.</p>
-        <pre>/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser \
-  --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/brave-debug</pre>
-        <p style="margin-top:8px;">Verify it's running:</p>
-        <pre>curl -s http://127.0.0.1:9222/json/version</pre>
-      </div>
-
-      <div class="setup-step">
-        <h3>4. Add Brave MCP to Claude Code</h3>
-        <p>Add this to <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:0.78rem;">~/.claude/settings.json</code>:</p>
-        <pre>{
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
-      "env": {
-        "PUPPETEER_WS_ENDPOINT": "ws://127.0.0.1:9222"
+      // Content planner command
+      if (yourSlug) {
+        const vsFlag = firstResearchSlug ? ` vs ${firstResearchSlug}` : '';
+        const cmd = `/linkedin-content-planner ${yourSlug}${vsFlag}`;
+        renderCommand(blockPlan, 'Step 3 — Build your 30-day content strategy', 'run in Claude Code', cmd);
+      } else {
+        renderCommand(blockPlan, 'Step 3 — Build your 30-day content strategy', 'run in Claude Code', '');
       }
     }
-  }
-}</pre>
-      </div>
 
-      <div class="setup-step">
-        <h3>5. Log into LinkedIn</h3>
-        <p>In the Brave window you just opened, go to <strong>linkedin.com</strong> and sign in.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <footer>
-    <p>LinkedIn Growth Kit · <a href="https://github.com/hamzafarooq/linkedin-growth" target="_blank">GitHub</a> · Powered by <a href="https://claude.ai/code" target="_blank">Claude Code</a></p>
-  </footer>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  let profiles = [];
-  let serverOnline = false;
-  let running = false;
-
-  // ── Persistence ──────────────────────────────────────────────
-  function save() {
-    localStorage.setItem('lgk_your_url', document.getElementById('your-url').value);
-    localStorage.setItem('lgk_profiles', JSON.stringify(profiles));
-  }
-
-  function load() {
-    document.getElementById('your-url').value = localStorage.getItem('lgk_your_url') || '';
-    try { profiles = JSON.parse(localStorage.getItem('lgk_profiles')) || []; } catch(e) { profiles = []; }
-    if (profiles.length === 0) profiles = [{ url: '', label: '' }];
-    renderProfiles();
-    updateCommands();
-    checkAll();
-  }
-
-  // ── Profiles ──────────────────────────────────────────────────
-  function renderProfiles() {
-    const list = document.getElementById('profiles-list');
-    list.innerHTML = '';
-    profiles.forEach((p, i) => {
+    function addRow() {
+      const list = document.getElementById('research-list');
       const row = document.createElement('div');
       row.className = 'profile-row';
       row.innerHTML = `
-        <input type="text" placeholder="https://www.linkedin.com/in/someone/" value="${escapeHtml(p.url)}"
-          oninput="profiles[${i}].url = this.value; save(); updateCommands()">
-        <input type="text" class="label-input" placeholder="e.g. Paul (Decoding AI)" value="${escapeHtml(p.label)}"
-          oninput="profiles[${i}].label = this.value; save(); updateCommands()">
-        <button class="remove-btn" onclick="removeProfile(${i})">Remove</button>
+        <input type="url" placeholder="https://www.linkedin.com/in/someone/" oninput="updateCommands()">
+        <button class="btn-remove" onclick="removeRow(this)" title="Remove">×</button>
       `;
       list.appendChild(row);
-    });
-  }
+    }
 
-  function addProfile() {
-    profiles.push({ url: '', label: '' });
-    renderProfiles();
-    save();
+    function removeRow(btn) {
+      const rows = document.querySelectorAll('#research-list .profile-row');
+      if (rows.length <= 1) {
+        btn.closest('.profile-row').querySelector('input').value = '';
+        updateCommands();
+        return;
+      }
+      btn.closest('.profile-row').remove();
+      updateCommands();
+    }
+
+    function copyCmd(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    }
+
+    // Init
     updateCommands();
-  }
-
-  function removeProfile(i) {
-    profiles.splice(i, 1);
-    if (profiles.length === 0) profiles = [{ url: '', label: '' }];
-    renderProfiles();
-    save();
-    updateCommands();
-  }
-
-  function escapeHtml(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // ── Slug helpers ──────────────────────────────────────────────
-  function slugFromUrl(url) {
-    if (!url) return null;
-    const m = url.match(/linkedin\.com\/in\/([^/?]+)/i) || url.match(/linkedin\.com\/company\/([^/?]+)/i);
-    return m ? m[1].replace(/\/$/, '') : null;
-  }
-
-  // ── Commands ──────────────────────────────────────────────────
-  let researchCmds = [];
-  let auditCmd = '';
-  let plannerCmd = '';
-
-  function updateCommands() {
-    const yourUrl = document.getElementById('your-url').value.trim();
-    const yourSlug = slugFromUrl(yourUrl);
-    const validProfiles = profiles.filter(p => p.url.trim());
-
-    researchCmds = validProfiles.map(p => `/linkedin-profile-research ${p.url.trim()}`);
-
-    const firstSlug = validProfiles.length > 0 ? slugFromUrl(validProfiles[0].url) : null;
-    const vsStr = firstSlug ? ` vs ${firstSlug}` : '';
-
-    auditCmd = yourUrl ? `/analyze-your-linkedin-profile ${yourUrl}${vsStr}` : '';
-    plannerCmd = yourSlug ? `/linkedin-content-planner ${yourSlug}${vsStr}` : '';
-
-    // Render research
-    const researchDiv = document.getElementById('research-cmds');
-    if (validProfiles.length === 0) {
-      researchDiv.innerHTML = emptyBox();
-    } else {
-      researchDiv.innerHTML = validProfiles.map((p, i) => {
-        const cmd = researchCmds[i];
-        return cmdBox(cmd, 'out-research', `Run${validProfiles.length > 1 ? ' #'+(i+1) : ''}`) +
-          (p.label ? `<div style="font-size:0.75rem;color:var(--muted);margin-top:3px;margin-bottom:8px;padding-left:4px;">${escapeHtml(p.label)}</div>` : '<div style="margin-bottom:8px;"></div>');
-      }).join('');
-    }
-
-    document.getElementById('audit-cmd').innerHTML = auditCmd ? cmdBox(auditCmd, 'out-audit', 'Run') : emptyBox();
-    document.getElementById('planner-cmd').innerHTML = plannerCmd ? cmdBox(plannerCmd, 'out-planner', 'Run') : emptyBox();
-  }
-
-  function emptyBox() {
-    return `<div class="cmd-box"><span class="cmd-empty cmd-text">— fill in your URLs above —</span></div>`;
-  }
-
-  function cmdBox(cmd, outputId, runLabel) {
-    const safeCmd = cmd.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-    return `<div class="cmd-box" onclick="copyCmd(this, '${safeCmd}')">
-      <span class="cmd-text">${escapeHtml(cmd)}</span>
-      <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this.closest('.cmd-box'), '${safeCmd}')">copy</button>
-      <button class="run-btn" onclick="event.stopPropagation(); runCommand('${safeCmd}', '${outputId}')" ${running ? 'disabled' : ''}>${runLabel || '▶ Run'}</button>
-    </div>`;
-  }
-
-  // ── Copy ──────────────────────────────────────────────────────
-  function copyCmd(el, cmd) {
-    navigator.clipboard.writeText(cmd).then(() => {
-      const btn = el.querySelector('.copy-btn');
-      if (btn) { btn.textContent = 'copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500); }
-      showToast('Copied!');
-    });
-  }
-
-  function copyAll() {
-    const lines = [...researchCmds];
-    if (auditCmd) lines.push(auditCmd);
-    if (plannerCmd) lines.push(plannerCmd);
-    if (lines.length === 0) { showToast('Add URLs first'); return; }
-    navigator.clipboard.writeText(lines.join('\n')).then(() => showToast('All commands copied!'));
-  }
-
-  // ── Run ───────────────────────────────────────────────────────
-  function runCommand(cmd, outputId) {
-    if (!serverOnline) {
-      showToast('Start the server first: npm start');
-      toggleSetup(true);
-      return;
-    }
-    if (running) { showToast('A command is already running'); return; }
-
-    const area = document.getElementById(outputId);
-    const body = document.getElementById(outputId + '-body');
-    const label = document.getElementById(outputId + '-label');
-
-    area.classList.add('visible');
-    body.innerHTML = `<span class="out-cmd">$ ${escapeHtml(cmd)}</span>`;
-    setRunning(true);
-    label.textContent = 'Running…';
-
-    const es = new EventSource('/api/run?' + new URLSearchParams({ _: Date.now() }));
-
-    // Actually use fetch + ReadableStream for POST
-    es.close();
-
-    fetch('/api/run', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ command: cmd })
-    }).then(res => {
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = '';
-
-      function read() {
-        reader.read().then(({ done, value }) => {
-          if (done) { finish(0); return; }
-          buf += decoder.decode(value, { stream: true });
-          const parts = buf.split('\n\n');
-          buf = parts.pop();
-          for (const part of parts) {
-            if (!part.startsWith('data: ')) continue;
-            try {
-              const ev = JSON.parse(part.slice(6));
-              handleEvent(ev, body, label, outputId);
-            } catch(e) {}
-          }
-          read();
-        }).catch(err => {
-          appendLine(body, `<span class="out-error">Connection error: ${escapeHtml(err.message)}</span>`);
-          finish(1);
-        });
-      }
-      read();
-    }).catch(err => {
-      appendLine(body, `<span class="out-error">Failed to connect to server: ${escapeHtml(err.message)}</span>`);
-      finish(1);
-    });
-
-    function finish(code) {
-      setRunning(false);
-      if (code === 0) {
-        label.textContent = 'Done';
-      } else {
-        label.textContent = 'Error';
-      }
-    }
-  }
-
-  function handleEvent(ev, body, label, outputId) {
-    if (ev.type === 'text') {
-      appendLine(body, `<span class="out-text">${escapeHtml(ev.text)}</span>`);
-    } else if (ev.type === 'tool') {
-      appendLine(body, `<span class="out-tool">→ ${escapeHtml(ev.text)}</span>\n`);
-    } else if (ev.type === 'stderr') {
-      appendLine(body, `<span class="out-log">${escapeHtml(ev.text)}</span>\n`);
-    } else if (ev.type === 'error') {
-      appendLine(body, `<span class="out-error">Error: ${escapeHtml(ev.text)}</span>`);
-    } else if (ev.type === 'done') {
-      const stepMap = { 'out-research': 'circle-1', 'out-audit': 'circle-2', 'out-planner': 'circle-3' };
-      const circleId = stepMap[outputId];
-      if (circleId && ev.code === 0) {
-        const c = document.getElementById(circleId);
-        c.classList.remove('active');
-        c.classList.add('done');
-        c.textContent = '✓';
-      }
-      appendLine(body, `<span class="out-done">${ev.code === 0 ? '✓ Done' : '✗ Exited with code ' + ev.code}</span>`);
-      label.textContent = ev.code === 0 ? 'Done ✓' : 'Error';
-    }
-  }
-
-  function appendLine(body, html) {
-    body.innerHTML += html;
-    body.scrollTop = body.scrollHeight;
-  }
-
-  function clearOutput(outputId) {
-    document.getElementById(outputId + '-body').innerHTML = '';
-    document.getElementById(outputId + '-label').textContent = 'Ready';
-    document.getElementById(outputId).classList.remove('visible');
-  }
-
-  function setRunning(val) {
-    running = val;
-    document.getElementById('run-all-btn').disabled = val;
-    updateCommands(); // re-render buttons with disabled state
-  }
-
-  // ── Run All ───────────────────────────────────────────────────
-  async function runAll() {
-    if (!serverOnline) { showToast('Start the server first: npm start'); toggleSetup(true); return; }
-
-    const cmds = [];
-    researchCmds.forEach(c => cmds.push({ cmd: c, outputId: 'out-research' }));
-    if (auditCmd) cmds.push({ cmd: auditCmd, outputId: 'out-audit' });
-    if (plannerCmd) cmds.push({ cmd: plannerCmd, outputId: 'out-planner' });
-
-    if (cmds.length === 0) { showToast('Add URLs first'); return; }
-
-    for (const { cmd, outputId } of cmds) {
-      await runCommandAsync(cmd, outputId);
-    }
-    showToast('All steps complete!');
-  }
-
-  function runCommandAsync(cmd, outputId) {
-    return new Promise((resolve) => {
-      if (!serverOnline) { resolve(); return; }
-
-      const area = document.getElementById(outputId);
-      const body = document.getElementById(outputId + '-body');
-      const label = document.getElementById(outputId + '-label');
-
-      area.classList.add('visible');
-      body.innerHTML += `<span class="out-cmd">$ ${escapeHtml(cmd)}</span>`;
-      setRunning(true);
-      label.textContent = 'Running…';
-
-      fetch('/api/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: cmd })
-      }).then(res => {
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buf = '';
-
-        function read() {
-          reader.read().then(({ done, value }) => {
-            if (done) { finish(0); return; }
-            buf += decoder.decode(value, { stream: true });
-            const parts = buf.split('\n\n');
-            buf = parts.pop();
-            for (const part of parts) {
-              if (!part.startsWith('data: ')) continue;
-              try {
-                const ev = JSON.parse(part.slice(6));
-                handleEvent(ev, body, label, outputId);
-                if (ev.type === 'done') { finish(ev.code); return; }
-              } catch(e) {}
-            }
-            read();
-          }).catch(() => { finish(1); });
-        }
-        read();
-      }).catch(() => { finish(1); });
-
-      function finish(code) {
-        setRunning(false);
-        label.textContent = code === 0 ? 'Done ✓' : 'Error';
-        resolve();
-      }
-    });
-  }
-
-  // ── Status checks ─────────────────────────────────────────────
-  async function checkAll() {
-    checkServer();
-    checkChrome();
-  }
-
-  async function checkServer() {
-    const dot = document.getElementById('server-dot');
-    const status = document.getElementById('server-status');
-    try {
-      const res = await fetch('/api/status');
-      const data = await res.json();
-      if (data.ok) {
-        dot.className = 'dot green';
-        status.textContent = 'Server — connected';
-        serverOnline = true;
-      }
-    } catch(e) {
-      dot.className = 'dot red';
-      status.textContent = 'Server — not running (npm start)';
-      serverOnline = false;
-    }
-  }
-
-  async function checkChrome() {
-    const dot = document.getElementById('chrome-dot');
-    const status = document.getElementById('chrome-status');
-    try {
-      await fetch('http://127.0.0.1:9222/json/version', { mode: 'no-cors' });
-      dot.className = 'dot green';
-      status.textContent = 'Brave — connected';
-    } catch(e) {
-      dot.className = 'dot yellow';
-      status.textContent = 'Brave — not found (see setup)';
-    }
-  }
-
-  // ── Setup toggle ──────────────────────────────────────────────
-  function toggleSetup(forceOpen) {
-    const body = document.getElementById('setup-body');
-    const toggle = document.getElementById('setup-toggle');
-    const open = forceOpen !== undefined ? forceOpen : !body.classList.contains('open');
-    body.classList.toggle('open', open);
-    toggle.textContent = open ? 'Hide ▴' : 'Show ▾';
-  }
-
-  // ── Toast ─────────────────────────────────────────────────────
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
-  }
-
-  load();
-</script>
+  </script>
 </body>
 </html>

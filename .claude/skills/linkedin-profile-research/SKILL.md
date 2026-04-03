@@ -303,9 +303,12 @@ What would you like to do next?"
 ## Notes
 
 **Browser Automation:**
-- Use the Chrome DevTools MCP to navigate LinkedIn
-- Implement scroll-to-load for post feed
-- LinkedIn requires an active session — user must be logged in
+- Use the Brave MCP (`mcp__brave-devtools__*` tools) to navigate LinkedIn
+- Use `mcp__brave-devtools__browser_navigate` to load pages
+- Use `mcp__brave-devtools__browser_evaluate` to extract data from the DOM
+- Use `mcp__brave-devtools__browser_snapshot` to inspect page structure
+- Use `mcp__brave-devtools__browser_scroll` or key presses to scroll for lazy-loaded posts
+- LinkedIn requires an active session — user must be logged into LinkedIn in Brave
 
 **No LinkedIn API:**
 - This skill uses browser automation, not the LinkedIn API

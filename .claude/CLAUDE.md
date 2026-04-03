@@ -47,20 +47,14 @@ Create a 30-day content strategy with a post-by-post calendar, detailed briefs, 
 
 Output: `output/linkedin-strategy/{your-slug}/`
 
-## Chrome Setup (Required)
+## Brave MCP (Required)
 
-Chrome must be running with remote debugging enabled before any skill will work:
+Skills use the Brave MCP (`mcp__brave-devtools__*`) for browser automation. Make sure:
 
-**Mac:**
-```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-debug
-```
+1. The Brave MCP server is configured in your Claude Code settings
+2. You are **logged into LinkedIn** in Brave before running any skill
 
-Check connection: `curl -s http://127.0.0.1:9222/json/version`
-
-LinkedIn research requires you to be **logged into LinkedIn** in this Chrome instance.
+No Chrome setup needed — Brave MCP handles all browser navigation directly.
 
 ## Output Locations
 

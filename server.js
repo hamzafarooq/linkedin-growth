@@ -39,6 +39,7 @@ app.post('/api/run', (req, res) => {
 
   const proc = spawn('claude', [
     '--dangerously-skip-permissions',
+    '--no-session-persistence',
     '--output-format', 'stream-json',
     '--include-partial-messages',
     '--verbose',

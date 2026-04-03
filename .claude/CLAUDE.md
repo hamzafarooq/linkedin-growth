@@ -2,20 +2,37 @@
 
 This file documents how to work with the LinkedIn Growth Kit skills.
 
-## Three Skills, One Pipeline
+## Run everything at once
 
 ```
-/linkedin_profile_research {LinkedIn URL}
+/linkedin-full-pipeline {your-url} {inspiration-url-1} {inspiration-url-2} ...
+```
+
+One command. Researches the inspiration profiles, audits yours, builds the 30-day plan. End to end.
+
+## Or run each step individually
+
+```
+/linkedin-profile-research {LinkedIn URL}
     ↓  learn from creators you admire
-/analyze_your_linkedin_profile {your LinkedIn URL}
+/analyze-your-linkedin-profile {your LinkedIn URL}
     ↓  benchmark your own profile
-/linkedin_content_planner
+/linkedin-content-planner
     ↓  build your 30-day content strategy
 ```
 
 ## Skills
 
-### `/linkedin_profile_research`
+### `/linkedin-full-pipeline`
+Runs all three steps in sequence from a single command. First URL is yours; remaining URLs are profiles to research.
+
+```
+/linkedin-full-pipeline {your-url} {inspiration-url-1} {inspiration-url-2}
+```
+
+Output: all three output folders populated in one run.
+
+### `/linkedin-profile-research`
 Research any LinkedIn profile — a creator you follow, a colleague, someone in your space whose content you want to learn from. Extracts content pillars, posting patterns, top posts, messaging themes, and audience signals.
 
 ```

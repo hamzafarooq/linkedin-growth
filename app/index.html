@@ -271,24 +271,27 @@
     <div class="card">
       <h2><span class="step-num">3</span> Run in Claude Code</h2>
 
-      <div class="pipeline">
-        <div class="pipeline-step">Research profiles</div>
-        <div class="pipeline-arrow">→</div>
-        <div class="pipeline-step">Audit your profile</div>
-        <div class="pipeline-arrow">→</div>
-        <div class="pipeline-step">Build strategy</div>
+      <!-- Combined command -->
+      <div class="command-block" id="block-pipeline"></div>
+
+      <div class="hint" style="margin-top: 12px; margin-bottom: 20px;">
+        One command. It researches the profiles above, audits yours, then builds your 30-day plan — all in sequence. Make sure you're <strong>logged into LinkedIn in Brave</strong> before running.
       </div>
 
+      <!-- Divider -->
+      <div style="display:flex; align-items:center; gap:10px; margin: 20px 0;">
+        <div style="flex:1; height:1px; background:var(--border);"></div>
+        <span style="font-size:0.75rem; color:var(--muted); white-space:nowrap;">or run step by step</span>
+        <div style="flex:1; height:1px; background:var(--border);"></div>
+      </div>
+
+      <!-- Individual commands -->
       <div class="commands-section" id="commands-section">
         <div class="command-block" id="block-research"></div>
         <div class="divider" id="div1" style="display:none"></div>
         <div class="command-block" id="block-audit"></div>
         <div class="divider" id="div2" style="display:none"></div>
         <div class="command-block" id="block-plan"></div>
-      </div>
-
-      <div class="hint">
-        Open Claude Code in your terminal and paste each command. Make sure you're <strong>logged into LinkedIn in Brave</strong> before running.
       </div>
     </div>
   </div>
@@ -333,11 +336,20 @@
       const yourSlug = slugify(yourUrl);
       const firstResearchSlug = researchURLs.length > 0 ? slugify(researchURLs[0]) : '';
 
+      const blockPipeline = document.getElementById('block-pipeline');
       const blockResearch = document.getElementById('block-research');
       const blockAudit = document.getElementById('block-audit');
       const blockPlan = document.getElementById('block-plan');
       const div1 = document.getElementById('div1');
       const div2 = document.getElementById('div2');
+
+      // Combined pipeline command
+      if (yourUrl) {
+        const allUrls = [yourUrl, ...researchURLs].join(' ');
+        renderCommand(blockPipeline, 'Run everything at once', 'recommended', `/linkedin-full-pipeline ${allUrls}`);
+      } else {
+        renderCommand(blockPipeline, 'Run everything at once', 'recommended', '');
+      }
 
       // Research commands (one per URL)
       if (researchURLs.length > 0) {
